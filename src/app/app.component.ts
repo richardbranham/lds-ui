@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserLocationComponent } from './user-location/user-location.component';
 
 @Component({
   selector: 'app-root',
@@ -28,11 +29,11 @@ export class AppComponent {
           console.log(res);
         },
         err => {
-          console.log("Error occured");
+          console.log('Error occured');
         }
       );
-    
-    console.log("req = ", req);
+
+    console.log('req = ', req);
   }
 
   // {username: "richard@kotter.net", password: ""}

@@ -8,11 +8,14 @@ import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
 import { RealtimeGeolocationService } from 'nemex-angular2-realtimegeolocation';
 
+import { UserLocationComponent } from './user-location/user-location.component';
+
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserLocationComponent
   ],
   imports: [
     BrowserModule,
