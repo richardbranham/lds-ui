@@ -46,3 +46,10 @@
   <div class="item item-4" fxFlex fxFlexOffset="50px"  fxFlexOffset.xs="0">Item 4</div>
   <div class="item item-5" fxFlex="200px">Item 5</div>
 </div>
+
+
+<vg-player>
+  <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+      <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
+  </video>
+</vg-player>
