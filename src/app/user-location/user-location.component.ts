@@ -16,13 +16,14 @@ export class UserLocationComponent implements OnInit {
     ngOnInit() {
       try {
           // Start obtaining realtime location when map component loads
-          this.locationService.refreshInterval = 300;
+          this.locationService.refreshInterval = 10000;
           this.locationService.start();
 
           // Update the location on the map according to the current position of the user
           this.locationService.getLocationObservable().subscribe(
             position => {
               this.currentLocation = position.coords;
+              console.log('Location', Date, this.currentLocation);
             },
             error => {
               // Usually called because of permission issues or an error obtaining the last position
