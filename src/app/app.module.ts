@@ -6,6 +6,7 @@ import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
+import { RealtimeGeolocationService } from 'nemex-angular2-realtimegeolocation';
 
 import { AppComponent } from './app.component';
 
@@ -22,7 +23,7 @@ import { AppComponent } from './app.component';
     VgOverlayPlayModule,
     VgBufferingModule
   ],
-  providers: [],
+  providers: [RealtimeGeolocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
