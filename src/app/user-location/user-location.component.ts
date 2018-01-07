@@ -10,6 +10,7 @@ import { RealtimeGeolocationService } from 'nemex-angular2-realtimegeolocation';
 
 export class UserLocationComponent implements OnInit {
     currentLocation: Coordinates = null;
+    currentLocationString: string;
 
     constructor(private locationService: RealtimeGeolocationService) { }
 
@@ -23,7 +24,8 @@ export class UserLocationComponent implements OnInit {
           this.locationService.getLocationObservable().subscribe(
             position => {
               this.currentLocation = position.coords;
-              console.log('Location', Date, this.currentLocation);
+              // console.log('Location', Date, this.currentLocation);
+              this.currentLocationString += this.currentLocation.latitude + ' ' + this.currentLocation.longitude + '<br />';
             },
             error => {
               // Usually called because of permission issues or an error obtaining the last position
