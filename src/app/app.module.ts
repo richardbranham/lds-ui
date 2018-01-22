@@ -22,11 +22,13 @@ import { AppComponent } from './app.component';
     FlexLayoutModule,
     HttpClientModule,
     VgCoreModule,
-    VgControlsModule,
+    VgControlsModule, 
     VgOverlayPlayModule,
     VgBufferingModule
   ],
   providers: [RealtimeGeolocationService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule { 
+}

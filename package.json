@@ -25,6 +25,7 @@
     "core-js": "^2.4.1",
     "nemex-angular2-realtimegeolocation": "0.0.6",
     "rxjs": "^5.5.2",
+    "videogular": "^2.2.1",
     "videogular2": "^6.0.1",
     "zone.js": "^0.8.14"
   },
