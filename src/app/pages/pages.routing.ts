@@ -1,3 +1,4 @@
+/*
 const routes: Routes = [
     {
       path: 'pages',
@@ -9,3 +10,4 @@ const routes: Routes = [
       ]
     }
   ];
+  */
