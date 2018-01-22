@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserLocationComponent } from './user-location/user-location.component';
+import { UserLocationComponent } from './pages/user-location/user-location.component';
 import {VgAPI} from 'videogular2/core';
 
 @Component({

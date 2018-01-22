@@ -4,7 +4,7 @@ import { UploadComponent } from './upload.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'upload',
     component: UploadComponent
   }
 ];
