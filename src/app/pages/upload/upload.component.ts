@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'upload',
-  template: `<strong>Upload content here</strong>`,
+  template: `Upload stuff here`,
 })
 export class UploadComponent {
   constructor() {}
