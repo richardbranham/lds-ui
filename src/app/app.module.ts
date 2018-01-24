@@ -43,7 +43,6 @@ const routes: Routes = [
       { path: 'locations',  loadChildren: './pages/user-location/user-location.module' },
     ]
   }
-  
 ];
 
 @NgModule({

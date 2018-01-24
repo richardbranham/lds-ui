@@ -50,7 +50,7 @@ export class AppComponent {
 
     api.currentTime = 17.5;
 
-    setInterval(function(){ console.log("Hello", api.currentTime); }, 3000);
+    //setInterval(function(){ console.log("Hello", api.currentTime); }, 3000);
     
     this.api.getDefaultMedia().subscriptions.ended.subscribe(
         () => {
