@@ -1,1 +1,18 @@
 <div [innerHTML]="currentLocationString"></div>
+
+<!-- 
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
+    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+</agm-map>
+
+<li *ngFor="let m of coords">
+    {{ m.lat }}--{{ m.lng }}
+</li>
+-->
+
+
+
+<agm-map [latitude]="lat" [longitude]="lng">
+    <agm-marker *ngFor="let m of coords" [latitude]="m.lat" [longitude]="m.lng"></agm-marker> 
+    <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
+</agm-map>

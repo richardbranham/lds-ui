@@ -12,6 +12,7 @@ import { UserLocationComponent } from './pages/user-location/user-location.compo
 import { UploadComponent } from './pages/upload/upload.component';
 import { SendMessageComponent } from './pages/send-message/send-message.component';
 import { ViewContentComponent } from './pages/view-content/view-content.component';
+import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
@@ -64,7 +65,10 @@ const routes: Routes = [
     RouterModule.forRoot(
       routes,
       { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U'
+    })
   ],
   providers: [RealtimeGeolocationService],
   bootstrap: [AppComponent]

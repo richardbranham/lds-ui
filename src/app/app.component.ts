@@ -18,30 +18,8 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    /*
-    this.http.get('https://api.github.com/users/seeschweiler').subscribe(data => {
-      console.log(data);
-    });
-    */
-
-    const req = this.http.post('https://staging.onescreen.kotter.net/newlogin', {
-      username: 'richard@kotter.net',
-      password: 'Kucharkj1*'
-    })
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log('Error occured');
-        }
-      );
-
-    console.log('req = ', req);
   }
 
-  // {username: "richard@kotter.net", password: ""}
-  
   // http://videogular.github.io/videogular2/docs/modules/core/services/vg-api/
   onPlayerReady(api:VgAPI) {
     this.api = api;
