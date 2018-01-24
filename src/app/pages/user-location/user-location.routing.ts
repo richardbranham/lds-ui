@@ -4,8 +4,8 @@ import { UserLocationComponent } from './user-location.component';
 
 const routes: Routes = [
   {
-    path: 'locations',
-    component: UserLocationComponent
+    //path: 'locations',
+    //component: UserLocationComponent
   }
 ];
 
