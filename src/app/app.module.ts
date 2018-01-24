@@ -10,6 +10,7 @@ import { VgBufferingModule } from 'videogular2/buffering';
 import { RealtimeGeolocationService } from 'nemex-angular2-realtimegeolocation';
 import { UserLocationComponent } from './pages/user-location/user-location.component';
 import { UploadComponent } from './pages/upload/upload.component';
+import { SendMessageComponent } from './pages/send-message/send-message.component';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
@@ -18,19 +19,27 @@ const routes: Routes = [
     component: UploadComponent,
     children: [
       //{ path: '', redirectTo: 'app', pathMatch: 'full' },
-      { path: 'upload',  loadChildren: './upload/upload.module#NewModule' },
-      { path: 'locations',  loadChildren: './user-location/user-location.module#NewModule' },
-      { path: 'sendmessage',  loadChildren: './send-message/send-message.module#NewModule' },
-      { path: 'training',  loadChildren: './view-content/view-content.module#NewModule' }
+      { path: 'upload',  loadChildren: './pages/upload/upload.module' },
+ //     { path: 'locations',  loadChildren: './pages/user-location/user-location.module#NewModule' },
+ //     { path: 'training',  loadChildren: './pages/view-content/view-content.module#NewModule' }
+    ]
+  },
+  {
+    path: 'sendmessage',
+    component: SendMessageComponent,
+    children: [
+      { path: 'sendmessage',  loadChildren: './pages/send-message/send-message.module' },
     ]
   }
+  
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     UserLocationComponent,
-    UploadComponent
+    UploadComponent,
+    SendMessageComponent
   ],
   imports: [
     BrowserModule,

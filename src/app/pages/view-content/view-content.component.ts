@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'upload',
-  template: `<strong>Upload content here</strong>`,
+  selector: 'view-content',
+  template: `<strong>view content</strong>`,
 })
 export class ViewContentComponent {
   constructor() {}
