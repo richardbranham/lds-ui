@@ -26,7 +26,7 @@ export class AppComponent {
 
     console.log("onPlayerReady", this);
 
-    api.currentTime = 17.5;
+    //api.currentTime = 17.5;
 
     //setInterval(function(){ console.log("Hello", api.currentTime); }, 3000);
     

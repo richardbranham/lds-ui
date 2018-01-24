@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { RealtimeGeolocationService } from 'nemex-angular2-realtimegeolocation';
+import { AgmMap } from '@agm/core/directives/map';
 
 @Component({
     // moduleId: module.id,
@@ -16,27 +17,28 @@ export class UserLocationComponent implements OnInit {
     lat: number = 33.8836184;
     lng: number = -84.0563705;
 
-    coords = [
-      {"lat":33.9184669000, "lng":-84.0148312000},
-      {"lat":33.8299653000, "lng":-84.0847569000}
-    ];
+    coords: any[] = [];
 
-    constructor(private locationService: RealtimeGeolocationService, private http: HttpClient) { }
+    constructor(private locationService: RealtimeGeolocationService, private http: HttpClient) { 
+      }
 
     ngOnInit() {
       try {
-        const req = this.http.get('http://ldsapi.kotter.net/api/location')
+        const req = this.http.get('http://ldsapi.kotter.net/api/location', {responseType: 'text'})
           .subscribe(
             res => {
-              console.log(res);
+              let v = JSON.parse(res);
+              v.forEach(element => {
+                element.latitude = parseFloat(element.latitude);
+                element.longitude = parseFloat(element.longitude);
+                this.coords.push(element);
+              });
             },
             err => {
               console.log('Error occured');
             }
           );
     
-        console.log('req = ', req);    
-
         /*
           // Start obtaining realtime location when map component loads
           this.locationService.refreshInterval = 10000;
