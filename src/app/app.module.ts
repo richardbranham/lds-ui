@@ -18,7 +18,10 @@ const routes: Routes = [
     component: UploadComponent,
     children: [
       //{ path: '', redirectTo: 'app', pathMatch: 'full' },
-      { path: 'upload',  loadChildren: './upload/upload.module#NewModule' }
+      { path: 'upload',  loadChildren: './upload/upload.module#NewModule' },
+      { path: 'locations',  loadChildren: './user-location/user-location.module#NewModule' },
+      { path: 'sendmessage',  loadChildren: './send-message/send-message.module#NewModule' },
+      { path: 'training',  loadChildren: './view-content/view-content.module#NewModule' }
     ]
   }
 ];

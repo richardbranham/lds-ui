@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'send-message',
-  template: `<strong>Upload content here</strong>`,
+  template: `<strong>Send message</strong>`,
 })
 export class SendMessageComponent {
   constructor() {}

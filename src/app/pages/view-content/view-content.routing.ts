@@ -4,7 +4,7 @@ import { ViewContentComponent } from './view-content.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'training',
     component: ViewContentComponent
   }
 ];

@@ -4,7 +4,7 @@ import { SendMessageComponent } from './send-message.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'sendmessage',
     component: SendMessageComponent
   }
 ];

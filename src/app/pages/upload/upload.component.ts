@@ -8,5 +8,3 @@ export class UploadComponent {
   constructor() {}
 }
 
-
-// https://akveo.github.io/ng2-admin/articles/013-create-new-page/
