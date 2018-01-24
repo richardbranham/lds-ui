@@ -28,10 +28,13 @@ export class UserLocationComponent implements OnInit {
           .subscribe(
             res => {
               let v = JSON.parse(res);
+              let i = 1;
               v.forEach(element => {
                 element.latitude = parseFloat(element.latitude);
                 element.longitude = parseFloat(element.longitude);
+                element.index = i.toString();
                 this.coords.push(element);
+                i++;
               });
             },
             err => {

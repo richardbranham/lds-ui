@@ -6,12 +6,12 @@
 </agm-map>
 
 <li *ngFor="let m of coords">
-    {{ m.latitude }}--{{ m.longitude }}
+    {{ m.latitude }}--{{ m.longitude }} -- {{ m.index }}
 </li>
 -->
 
 
-<agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker *ngFor="let m of coords" [latitude]="m.latitude" [longitude]="m.longitude"></agm-marker> 
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="8">
+    <agm-marker *ngFor="let m of coords" [latitude]="m.latitude" [longitude]="m.longitude" [label]="m.index"></agm-marker> 
 </agm-map>
 
