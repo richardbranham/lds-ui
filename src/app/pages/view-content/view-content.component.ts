@@ -32,7 +32,19 @@ export class ViewContentComponent {
             console.log('Error occured');
           }
         );
-    } catch (error) {
+
+        const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/training/getprogress', 
+          {"somevar":"a value"})
+        .subscribe(
+          res => {
+            //let v = JSON.parse(res);
+            console.log("res", res);
+          },
+          err => {
+            console.log('Error occured in getprogress');
+          }
+        );
+      } catch (error) {
       // This error is usually called when device does not support geolocation at all
       alert(error);
     }
