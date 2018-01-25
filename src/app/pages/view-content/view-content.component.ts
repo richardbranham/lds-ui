@@ -34,7 +34,7 @@ export class ViewContentComponent {
         );
 
         const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/training/getprogress', 
-          {"somevar":"a value"})
+          {"userId":"1", "contentId":"23915430-016d-11e8-81bf-01b3b67b09bc"})
         .subscribe(
           res => {
             //let v = JSON.parse(res);
