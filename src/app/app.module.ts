@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { VgCoreModule } from 'videogular2/core';
@@ -14,6 +14,7 @@ import { SendMessageComponent } from './pages/send-message/send-message.componen
 import { ViewContentComponent } from './pages/view-content/view-content.component';
 import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U
 import { AppComponent } from './app.component';
+import { HostListener } from '@angular/core/src/metadata/directives';
 
 const routes: Routes = [
   {
@@ -74,5 +75,18 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 
-export class AppModule { 
+export class AppModule {
+
+  constructor(router:Router) {
+    router.events.forEach((event: NavigationEvent) => {
+      if(event instanceof NavigationStart) {
+        console.log("event", event);
+      }
+      // NavigationEnd
+      // NavigationCancel
+      // NavigationError
+      // RoutesRecognized
+    });
+  }
+
 }
