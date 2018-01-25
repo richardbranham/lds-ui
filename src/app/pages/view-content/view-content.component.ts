@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { VgAPI } from 'videogular2/core';
+import { VgAPI, VgMedia } from 'videogular2/core';
 
 @Component({
   selector: 'view-content',
   template: `<vg-player (onPlayerReady)="onPlayerReady($event)">
     <video #media [vgMedia]="media" id="singleVideo" preload="auto" width="400" height="300" controls>
-        <source src="http://ldsapi.kotter.net/storage/UserStatusChanges.mp4" type="video/mp4">
+        <source [src]="contentUrl" type="video/mp4">
     </video>
   </vg-player>`,
 })
@@ -27,6 +27,7 @@ export class ViewContentComponent {
             console.log("res", res);
             this.contentUrl = "http://ldsapi.kotter.net" + res;
             console.log("contentUrl", this.contentUrl);
+            (<VgMedia>this.api.getDefaultMedia()).loadMedia();
           },
           err => {
             console.log('Error occured');
