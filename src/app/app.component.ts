@@ -24,7 +24,7 @@ export class AppComponent {
           res => {
             //let v = JSON.parse(res);
             console.log("res", res);
-            setTimeout(alert("hello"), 3000);
+            //setTimeout(alert("hello"), 3000);
           },
           err => {
             console.log('Error occured');
