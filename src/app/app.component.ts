@@ -19,11 +19,11 @@ export class AppComponent {
 
   constructor(private http: HttpClient){
     window.onbeforeunload = function(e) {
-      const req = http.get('http://ldsapi.kotter.net/api/training/getcontent', {responseType: 'text'})
+      const req = http.post('http://ldsapi.kotter.net/api/training/getcontent', {"users_id":"1"})
         .subscribe(
           res => {
             //let v = JSON.parse(res);
-            console.log("res", res);
+            console.log("getcontent res", res);
             //setTimeout(alert("hello"), 3000);
           },
           err => {
@@ -43,7 +43,7 @@ export class AppComponent {
   onPlayerReady(api:VgAPI) {
     this.api = api;
 
-    console.log("onPlayerReady", this);
+    console.log("onPlayerReady app.component", this);
 
     //api.currentTime = 17.5;
 

@@ -20,17 +20,17 @@ export class ViewContentComponent {
 
   ngOnInit() {
     try {
-      const req = this.http.get('http://ldsapi.kotter.net/api/training/getcontent', {responseType: 'text'})
+      const req = this.http.post('http://ldsapi.kotter.net/api/training/getcontent', {"users_id":"2"}, { responseType: 'text' })
         .subscribe(
           res => {
             //let v = JSON.parse(res);
-            console.log("res", res);
+            //console.log("getcontent res", res);
             this.contentUrl = "http://ldsapi.kotter.net" + res;
             console.log("contentUrl", this.contentUrl);
             (<VgMedia>this.api.getDefaultMedia()).loadMedia();
           },
           err => {
-            console.log('Error occured');
+            console.log('Error occured', err);
           }
         );
 
@@ -54,7 +54,7 @@ export class ViewContentComponent {
 
   onPlayerReady(api:VgAPI) {
     this.api = api;
-    console.log("onPlayerReady");
+    console.log("onPlayerReady view-content");
 
     this.api.getDefaultMedia().subscriptions.pause.subscribe(
       () => {
