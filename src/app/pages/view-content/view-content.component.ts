@@ -22,6 +22,7 @@ export class ViewContentComponent {
   currentUrl: string = "";
   api:VgAPI;
   contentFileList: any[] = [];
+  token: string = "";
 
   selectVideo(arg) {
     console.log("selectVideo", arg);
@@ -32,7 +33,11 @@ export class ViewContentComponent {
 
   ngOnInit() {
     try {
-      const req = this.http.post('http://ldsapi.kotter.net/api/training/getcontent', {"users_id":"2"}, { responseType: 'json' })
+      this.token = localStorage.getItem('token');
+      const req = this.http.post('http://ldsapi.kotter.net/api/auth/training/getcontent', 
+          {"users_id":"2"}, 
+          { responseType: 'json', 
+            headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
         .subscribe(
           res => {
             console.log("getcontent res", res);
@@ -43,8 +48,9 @@ export class ViewContentComponent {
           }
         );
 
-        const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/training/getprogress', 
-            {"userId":"1", "contentId":"23915430-016d-11e8-81bf-01b3b67b09bc"})
+        const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/getprogress', 
+            {"userId":"1", "contentId":"23915430-016d-11e8-81bf-01b3b67b09bc"}, 
+            { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
           .subscribe(
           res => {
             //let v = JSON.parse(res);

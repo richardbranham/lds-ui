@@ -24,7 +24,10 @@ export class UserLocationComponent implements OnInit {
 
     ngOnInit() {
       try {
-        const req = this.http.get('http://ldsapi.kotter.net/api/location', {responseType: 'text'})
+        let token = localStorage.getItem('token');
+        const req = this.http.get('http://ldsapi.kotter.net/api/auth/location', 
+          { responseType: 'text', 
+            headers: new HttpHeaders().set('Authorization', 'Bearer ' + token).set('Content-Type', 'application/json') })
           .subscribe(
             res => {
               let v = JSON.parse(res);
@@ -38,7 +41,7 @@ export class UserLocationComponent implements OnInit {
               });
             },
             err => {
-              console.log('Error occured');
+              console.log('Error occured in user location', err);
             }
           );
     
