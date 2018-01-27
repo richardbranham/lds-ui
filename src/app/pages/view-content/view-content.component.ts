@@ -4,7 +4,11 @@ import { VgAPI, VgMedia } from 'videogular2/core';
 
 @Component({
   selector: 'view-content',
-  template: `<vg-player (onPlayerReady)="onPlayerReady($event)">
+  template: `<li *ngFor="let m of contentFileList">
+  <a href='http://ldsapi.kotter.net{{m}}'>{{m}}</a><br />
+  </li>
+
+  <vg-player (onPlayerReady)="onPlayerReady($event)">
     <video #media [vgMedia]="media" id="singleVideo" preload="auto" width="400" height="300" controls>
         <source [src]="contentUrl" type="video/mp4">
     </video>
@@ -17,15 +21,17 @@ export class ViewContentComponent {
 
   contentUrl: string = "";
   api:VgAPI;
+  contentFileList: string[] = [];
 
   ngOnInit() {
     try {
-      const req = this.http.post('http://ldsapi.kotter.net/api/training/getcontent', {"users_id":"2"}, { responseType: 'text' })
+      const req = this.http.post('http://ldsapi.kotter.net/api/training/getcontent', {"users_id":"2"}, { responseType: 'json' })
         .subscribe(
           res => {
             //let v = JSON.parse(res);
-            //console.log("getcontent res", res);
-            this.contentUrl = "http://ldsapi.kotter.net" + res;
+            console.log("getcontent res", res);
+            //this.contentUrl = "http://ldsapi.kotter.net" + res;
+            this.contentFileList = <string[]>res;
             console.log("contentUrl", this.contentUrl);
             (<VgMedia>this.api.getDefaultMedia()).loadMedia();
           },
