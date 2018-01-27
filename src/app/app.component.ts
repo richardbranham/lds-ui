@@ -6,6 +6,12 @@ import {VgAPI} from 'videogular2/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { setTimeout } from 'core-js/library/web/timers';
 
+interface Login {
+  access_token: string;
+  token_type: string;
+  expires_in: string;
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,6 +24,27 @@ export class AppComponent {
   api:VgAPI;
 
   constructor(private http: HttpClient){
+    console.log("app constructor");
+
+    let token = localStorage.getItem('token');
+    console.log("token from localStorage", token);
+    if(!token || token === "") {
+      console.log("token was not set in localStorage, getting from api");
+      const req = http.post<Login>('http://ldsapi.kotter.net/api/auth/login', 
+          {"email":"rich.ldsapi@branham.us", "password":"Kucharkj1*"},
+          {headers: new HttpHeaders().set('Content-Type', 'application/json')})
+      .subscribe(
+        res => {
+          console.log("login returned", res);
+          console.log("access token:  ", res.access_token);
+          localStorage.setItem('token', res.access_token);
+        },
+        err => {
+          console.log('Login error occured');
+        }
+      );
+    }
+    
     window.onbeforeunload = function(e) {
       const req = http.post('http://ldsapi.kotter.net/api/training/getcontent', {"users_id":"1"})
         .subscribe(

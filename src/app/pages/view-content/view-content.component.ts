@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { VgAPI, VgMedia } from 'videogular2/core';
-
+// http://ldsapi.kotter.net{{m}}
 @Component({
   selector: 'view-content',
   template: `<li *ngFor="let m of contentFileList">
-  <a href='http://ldsapi.kotter.net{{m}}'>{{m}}</a><br />
+  <a [routerLink]="" (click)='selectVideo(m.file_path)'>{{m.file_name}}</a><br />
   </li>
 
   <vg-player (onPlayerReady)="onPlayerReady($event)">
     <video #media [vgMedia]="media" id="singleVideo" preload="auto" width="400" height="300" controls>
-        <source [src]="contentUrl" type="video/mp4">
+        <source [src]="currentUrl" type="video/mp4">
     </video>
   </vg-player>`,
 })
@@ -19,21 +19,24 @@ export class ViewContentComponent {
   constructor(private http: HttpClient) {
   }
 
-  contentUrl: string = "";
+  currentUrl: string = "";
   api:VgAPI;
-  contentFileList: string[] = [];
+  contentFileList: any[] = [];
+
+  selectVideo(arg) {
+    console.log("selectVideo", arg);
+    this.currentUrl = "http://ldsapi.kotter.net" + arg;
+    console.log("currentUrl", this.currentUrl);
+    (<VgMedia>this.api.getDefaultMedia()).loadMedia();
+  }
 
   ngOnInit() {
     try {
       const req = this.http.post('http://ldsapi.kotter.net/api/training/getcontent', {"users_id":"2"}, { responseType: 'json' })
         .subscribe(
           res => {
-            //let v = JSON.parse(res);
             console.log("getcontent res", res);
-            //this.contentUrl = "http://ldsapi.kotter.net" + res;
-            this.contentFileList = <string[]>res;
-            console.log("contentUrl", this.contentUrl);
-            (<VgMedia>this.api.getDefaultMedia()).loadMedia();
+            this.contentFileList = <any[]>res;
           },
           err => {
             console.log('Error occured', err);
