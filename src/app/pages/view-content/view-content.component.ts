@@ -31,11 +31,13 @@ export class ViewContentComponent {
     (<VgMedia>this.api.getDefaultMedia()).loadMedia();
   }
 
+  //          {"users_id":"2"}, 
+
   ngOnInit() {
     try {
       this.token = localStorage.getItem('token');
       const req = this.http.post('http://ldsapi.kotter.net/api/auth/training/getcontent', 
-          {"users_id":"2"}, 
+          {},
           { responseType: 'json', 
             headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
         .subscribe(

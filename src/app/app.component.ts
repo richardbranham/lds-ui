@@ -26,6 +26,7 @@ export class AppComponent {
   constructor(private http: HttpClient){
     console.log("app constructor");
 
+    localStorage.setItem('token', '');
     let token = localStorage.getItem('token');
     console.log("token from localStorage", token);
     if(!token || token === "") {
