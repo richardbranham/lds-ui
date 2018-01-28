@@ -1,7 +1,16 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { VgAPI, VgMedia } from 'videogular2/core';
-// http://ldsapi.kotter.net{{m}}
+
+interface ProgressModel {
+  training_progress_uuid: string;
+  training_contents_uuid: string;
+  users_id: string;
+  video_last_location: string;
+  created_at:  string;
+  updated_at:  string;
+};
+
 @Component({
   selector: 'view-content',
   template: `<li *ngFor="let m of contentFileList">
@@ -38,18 +47,18 @@ export class ViewContentComponent {
       this.token = localStorage.getItem('token');
       const req = this.http.post('http://ldsapi.kotter.net/api/auth/training/getcontent', 
           {},
-          { responseType: 'json', 
-            headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+          { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
         .subscribe(
           res => {
             console.log("getcontent res", res);
             this.contentFileList = <any[]>res;
           },
           err => {
-            console.log('Error occured', err);
+            console.log('Getcontent error occured', err);
           }
         );
 
+        /*
         const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/getprogress', 
             {"userId":"1", "contentId":"23915430-016d-11e8-81bf-01b3b67b09bc"}, 
             { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
@@ -62,6 +71,7 @@ export class ViewContentComponent {
             console.log('Error occured in getprogress', err);
           }
         );
+        */
       } catch (error) {
       // This error is usually called when device does not support geolocation at all
       alert(error);
