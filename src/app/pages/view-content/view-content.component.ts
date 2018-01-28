@@ -19,18 +19,22 @@ interface VideoSource {
 @Component({
   selector: 'view-content',
   template: `<li *ngFor="let m of contentFileList">
-  <a [routerLink]="" (click)='selectVideo(m.file_name, m.pivot.video_last_location)'>{{m.file_name}}</a><br />
+  <a [routerLink]="" (click)='selectVideo(m.file_name, m.pivot.video_last_location, m.pivot.training_progress_uuid)'>{{m.file_name}}</a><br />
   </li>
   <br />
-  <a [routerLink]="" (click)="setCurrentTime()">Set time</a>
-  <br />
+
   <vg-player (onPlayerReady)="onPlayerReady($event)">
     <video #media [vgMedia]="media" id="singleVideo" preload="auto" width="400" height="300" controls>
-        <!-- <source [src]="currentUrl" type="video/mp4"> -->
         <source *ngFor="let video of sources" [src]="video.src" type="video/mp4">
     </video>
-  </vg-player>`,
+  </vg-player>
+
+
+  `,
 })
+
+/*
+*/
 
 export class ViewContentComponent {
   constructor(private http: HttpClient) {
@@ -42,17 +46,14 @@ export class ViewContentComponent {
   token: string = "";
   sources:  Object[] = [];
 
-  selectVideo(videoPath, seekTime) {
-    console.log("selectVideo", videoPath);
+  selectVideo(videoPath, seekTime, training_progress_uuid) {
+    console.log("selectVideo", videoPath, training_progress_uuid);
     this.currentUrl = "http://ldsapi.kotter.net/storage/" + videoPath;
-    this.sources = [{ "src": this.currentUrl, "seekTime":seekTime }];
+    this.sources = [{ "src": this.currentUrl, "seekTime":seekTime, "training_progress_uuid":training_progress_uuid }];
     //console.log("currentUrl", this.currentUrl);
     console.log("sources", this.sources);
     console.log("setting currentTime", seekTime);
     (<VgMedia>this.api.getDefaultMedia()).currentTime = seekTime;
-    //(<VgMedia>this.api.getDefaultMedia()).loadMedia();
-    //(<VgMedia>this.api.getDefaultMedia()).seekTime(seekTime, false);
-    setTimeout(this.seek(seekTime), 2000);
     console.log("medias", this.api.medias);
   }
 
@@ -67,6 +68,8 @@ export class ViewContentComponent {
   ngOnInit() {
     try {
       this.token = localStorage.getItem('token');
+
+      /*
       const req = this.http.post('http://ldsapi.kotter.net/api/auth/training/getcontent', 
           {},
           { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
@@ -79,21 +82,21 @@ export class ViewContentComponent {
             console.log('Getcontent error occured', err);
           }
         );
+        */
 
-        /*
-        const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/getprogress', 
-            {"userId":"1", "contentId":"23915430-016d-11e8-81bf-01b3b67b09bc"}, 
+        const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/getprogress/true', 
+            {}, 
             { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
           .subscribe(
           res => {
             //let v = JSON.parse(res);
             console.log("res", res);
+            this.contentFileList = <any[]>res;
           },
           err => {
             console.log('Error occured in getprogress', err);
           }
         );
-        */
       } catch (error) {
       // This error is usually called when device does not support geolocation at all
       alert(error);
@@ -108,6 +111,26 @@ export class ViewContentComponent {
     this.api.getDefaultMedia().subscriptions.pause.subscribe(
       () => {
           console.log("Video paused");
+          // Save video location to db
+          try {
+            const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/updateprogress', 
+                { "training_progress_uuid" : (<ProgressModel>this.sources[0]).training_progress_uuid, 
+                  "video_last_location" : this.api.currentTime
+                },
+                { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+              .subscribe(
+              res => {
+                //let v = JSON.parse(res);
+                console.log("Saved video location to DB.", res);
+                this.contentFileList = <any[]>res;
+              },
+              err => {
+                console.log('Error occured in getprogress', err);
+              }
+            );
+          } catch(error) {
+
+          }
       }
     );
     
@@ -119,8 +142,9 @@ export class ViewContentComponent {
 
     this.api.getDefaultMedia().subscriptions.timeUpdate.subscribe(
       (wut) => {
-          console.log("timeUpdate event", this.api.currentTime, wut);
-          if(this.api.currentTime !== (<VideoSource>this.sources[0]).seekTime) {
+          console.log("timeUpdate event", this.api.currentTime, wut, this.api.state);
+          if(this.api.currentTime !== (<VideoSource>this.sources[0]).seekTime
+              && this.api.state != "playing") {
             this.api.currentTime = (<VideoSource>this.sources[0]).seekTime;
           }
       }
