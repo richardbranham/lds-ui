@@ -12,6 +12,7 @@ import { UserLocationComponent } from './pages/user-location/user-location.compo
 import { UploadComponent } from './pages/upload/upload.component';
 import { SendMessageComponent } from './pages/send-message/send-message.component';
 import { ViewContentComponent } from './pages/view-content/view-content.component';
+import { AdminComponent } from './pages/admin/admin.component';
 import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U
 import { AppComponent } from './app.component';
 import { HostListener } from '@angular/core/src/metadata/directives';
@@ -44,6 +45,13 @@ const routes: Routes = [
     children: [
       { path: 'locations',  loadChildren: './pages/user-location/user-location.module' },
     ]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    children: [
+      { path: 'admin',  loadChildren: './pages/admin/admin.module' },
+    ]
   }
 ];
 
@@ -53,7 +61,8 @@ const routes: Routes = [
     UserLocationComponent,
     UploadComponent,
     SendMessageComponent,
-    ViewContentComponent
+    ViewContentComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
