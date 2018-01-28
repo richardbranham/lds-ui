@@ -46,6 +46,25 @@ export class AdminComponent {
 
   pushToAll(contentUuid) {
     console.log(contentUuid);
+    try {
+      this.token = localStorage.getItem('token');
+      console.log("pushToAll, token = ", this.token);
+      const req = this.http.post<ContentModel[]>('http://ldsapi.kotter.net/api/auth/training/push', 
+          { 'uuid': contentUuid },
+          { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+        .subscribe(
+          res => {
+            console.log("pushToAll, res", res);
+            //this.contentFileList = res;
+          },
+          err => {
+            console.log('pushToAll error occured', err);
+          }
+          );
+      } catch (error) {
+        // This error is usually called when device does not support geolocation at all
+        alert(error);
+      } // catch
   }
 }
 
