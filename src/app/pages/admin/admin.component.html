@@ -1,0 +1,16 @@
+<strong>Administration</strong>
+
+<div>
+    Existing content<br />
+    <li *ngFor="let m of contentFileList">
+        {{m.file_name}}<a [routerLink]='' (click)="pushToAll(m.training_contents_uuid)">Push to all</a><br />
+    </li>
+</div>
+
+<div>
+    Push content to missionaries
+</div>
+
+<div>
+    Add users to the system
+</div>
