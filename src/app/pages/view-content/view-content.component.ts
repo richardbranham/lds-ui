@@ -14,12 +14,13 @@ interface ProgressModel {
 @Component({
   selector: 'view-content',
   template: `<li *ngFor="let m of contentFileList">
-  <a [routerLink]="" (click)='selectVideo(m.file_path)'>{{m.file_name}}</a><br />
+  <a [routerLink]="" (click)='selectVideo(m.file_name, m.pivot.video_last_location)'>{{m.file_name}}</a><br />
   </li>
 
   <vg-player (onPlayerReady)="onPlayerReady($event)">
     <video #media [vgMedia]="media" id="singleVideo" preload="auto" width="400" height="300" controls>
-        <source [src]="currentUrl" type="video/mp4">
+        <!-- <source [src]="currentUrl" type="video/mp4"> -->
+        <source *ngFor="let video of sources" [src]="video.src" type="video/mp4">
     </video>
   </vg-player>`,
 })
@@ -32,15 +33,24 @@ export class ViewContentComponent {
   api:VgAPI;
   contentFileList: any[] = [];
   token: string = "";
+  sources:  Object[] = [];
 
-  selectVideo(arg) {
-    console.log("selectVideo", arg);
-    this.currentUrl = "http://ldsapi.kotter.net" + arg;
-    console.log("currentUrl", this.currentUrl);
-    (<VgMedia>this.api.getDefaultMedia()).loadMedia();
+  selectVideo(videoPath, seekTime) {
+    console.log("selectVideo", videoPath);
+    this.currentUrl = "http://ldsapi.kotter.net/storage/" + videoPath;
+    this.sources = [{ "src": this.currentUrl }];
+    //console.log("currentUrl", this.currentUrl);
+    console.log("sources", this.sources);
+    //(<VgMedia>this.api.getDefaultMedia()).currentTime = seekTime;
+    //(<VgMedia>this.api.getDefaultMedia()).loadMedia();
+    //(<VgMedia>this.api.getDefaultMedia()).seekTime(seekTime, false);
+    setTimeout(this.seek(seekTime), 2000);
+    
   }
 
-  //          {"users_id":"2"}, 
+  seek(seekTime) {
+    this.api.getDefaultMedia().currentTime = seekTime;
+  }
 
   ngOnInit() {
     try {
