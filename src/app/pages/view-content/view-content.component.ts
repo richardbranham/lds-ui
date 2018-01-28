@@ -11,12 +11,19 @@ interface ProgressModel {
   updated_at:  string;
 };
 
+interface VideoSource {
+  src:  string;
+  seekTime:  string;
+}
+
 @Component({
   selector: 'view-content',
   template: `<li *ngFor="let m of contentFileList">
   <a [routerLink]="" (click)='selectVideo(m.file_name, m.pivot.video_last_location)'>{{m.file_name}}</a><br />
   </li>
-
+  <br />
+  <a [routerLink]="" (click)="setCurrentTime()">Set time</a>
+  <br />
   <vg-player (onPlayerReady)="onPlayerReady($event)">
     <video #media [vgMedia]="media" id="singleVideo" preload="auto" width="400" height="300" controls>
         <!-- <source [src]="currentUrl" type="video/mp4"> -->
@@ -38,14 +45,19 @@ export class ViewContentComponent {
   selectVideo(videoPath, seekTime) {
     console.log("selectVideo", videoPath);
     this.currentUrl = "http://ldsapi.kotter.net/storage/" + videoPath;
-    this.sources = [{ "src": this.currentUrl }];
+    this.sources = [{ "src": this.currentUrl, "seekTime":seekTime }];
     //console.log("currentUrl", this.currentUrl);
     console.log("sources", this.sources);
-    //(<VgMedia>this.api.getDefaultMedia()).currentTime = seekTime;
+    console.log("setting currentTime", seekTime);
+    (<VgMedia>this.api.getDefaultMedia()).currentTime = seekTime;
     //(<VgMedia>this.api.getDefaultMedia()).loadMedia();
     //(<VgMedia>this.api.getDefaultMedia()).seekTime(seekTime, false);
     setTimeout(this.seek(seekTime), 2000);
-    
+    console.log("medias", this.api.medias);
+  }
+
+  setCurrentTime() {
+    this.api.currentTime = 33;
   }
 
   seek(seekTime) {
@@ -104,6 +116,16 @@ export class ViewContentComponent {
           console.log("Video ended.");
       }
     );
+
+    this.api.getDefaultMedia().subscriptions.timeUpdate.subscribe(
+      (wut) => {
+          console.log("timeUpdate event", this.api.currentTime, wut);
+          if(this.api.currentTime !== (<VideoSource>this.sources[0]).seekTime) {
+            this.api.currentTime = (<VideoSource>this.sources[0]).seekTime;
+          }
+      }
+    );
+
   } // onPlayerReady
 }
 
