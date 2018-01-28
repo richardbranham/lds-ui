@@ -28,8 +28,6 @@ interface VideoSource {
         <source *ngFor="let video of sources" [src]="video.src" type="video/mp4">
     </video>
   </vg-player>
-
-
   `,
 })
 
@@ -49,6 +47,12 @@ export class ViewContentComponent {
   selectVideo(videoPath, seekTime, training_progress_uuid) {
     console.log("selectVideo", videoPath, training_progress_uuid);
     this.currentUrl = "http://ldsapi.kotter.net/storage/" + videoPath;
+    //seekTime = this.getProgress(training_progress_uuid);
+    this.contentFileList.forEach(element => {
+      if(element.training_progress_uuid == training_progress_uuid) {
+        seekTime = element.video_last_location;
+      }
+    });
     this.sources = [{ "src": this.currentUrl, "seekTime":seekTime, "training_progress_uuid":training_progress_uuid }];
     //console.log("currentUrl", this.currentUrl);
     console.log("sources", this.sources);
@@ -65,38 +69,35 @@ export class ViewContentComponent {
     this.api.getDefaultMedia().currentTime = seekTime;
   }
 
+  getProgress(training_progress_uuid) {
+    console.log("getProgress");
+    let requestData = {};
+    if(training_progress_uuid != null) {
+      requestData = { 'training_progress_uuid':training_progress_uuid };
+    }
+
+    const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/getprogress/true', 
+      requestData, 
+      { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+    .subscribe(
+    res => {
+      //let v = JSON.parse(res);
+      console.log("getProgress res", res);
+      this.contentFileList = <any[]>res;
+    },
+    err => {
+      console.log('Error occured in getprogress', err);
+    }
+  );
+
+
+}
+
   ngOnInit() {
     try {
       this.token = localStorage.getItem('token');
+      this.getProgress(null);
 
-      /*
-      const req = this.http.post('http://ldsapi.kotter.net/api/auth/training/getcontent', 
-          {},
-          { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
-        .subscribe(
-          res => {
-            console.log("getcontent res", res);
-            this.contentFileList = <any[]>res;
-          },
-          err => {
-            console.log('Getcontent error occured', err);
-          }
-        );
-        */
-
-        const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/getprogress/true', 
-            {}, 
-            { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
-          .subscribe(
-          res => {
-            //let v = JSON.parse(res);
-            console.log("res", res);
-            this.contentFileList = <any[]>res;
-          },
-          err => {
-            console.log('Error occured in getprogress', err);
-          }
-        );
       } catch (error) {
       // This error is usually called when device does not support geolocation at all
       alert(error);
@@ -122,7 +123,8 @@ export class ViewContentComponent {
               res => {
                 //let v = JSON.parse(res);
                 console.log("Saved video location to DB.", res);
-                this.contentFileList = <any[]>res;
+                //this.contentFileList = <any[]>res;
+                this.getProgress((<ProgressModel>this.sources[0]).training_progress_uuid);
               },
               err => {
                 console.log('Error occured in getprogress', err);
