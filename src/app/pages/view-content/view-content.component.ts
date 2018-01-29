@@ -48,27 +48,17 @@ export class ViewContentComponent {
   selectVideo(videoPath, seekTime, training_progress_uuid) {
     console.log("selectVideo", videoPath, training_progress_uuid);
     this.currentUrl = "http://ldsapi.kotter.net/storage/" + videoPath;
+    this.sources = [{ "src": this.currentUrl, "seekTime":seekTime, "training_progress_uuid":training_progress_uuid }];
+/*    
     //seekTime = this.getProgress(training_progress_uuid);
     this.contentFileList.forEach(element => {
       if(element.training_progress_uuid == training_progress_uuid) {
         seekTime = element.video_last_location;
       }
     });
-    this.sources = [{ "src": this.currentUrl, "seekTime":seekTime, "training_progress_uuid":training_progress_uuid }];
-    //console.log("currentUrl", this.currentUrl);
-    console.log("sources", this.sources);
-    console.log("setting currentTime", seekTime);
     (<VgMedia>this.api.getDefaultMedia()).currentTime = seekTime;
-    console.log("medias", this.api.medias);
-  }
-
-  setCurrentTime() {
-    this.api.currentTime = 33;
-  }
-
-  seek(seekTime) {
-    this.api.getDefaultMedia().currentTime = seekTime;
-  }
+*/
+  } // selectVideo
 
   getProgress(training_progress_uuid) {
     console.log("getProgress");
@@ -110,7 +100,17 @@ export class ViewContentComponent {
     this.api = api;
     console.log("onPlayerReady view-content");
 
-    this.api.getDefaultMedia().subscriptions.pause.subscribe(
+    this.api.getDefaultMedia().subscriptions.seeked.subscribe(
+      () => {
+        //console.log("seeked", this.api.currentTime);
+      });
+
+      this.api.getDefaultMedia().subscriptions.seeking.subscribe(
+        () => {
+          //console.log("seeking");
+        });
+  
+      this.api.getDefaultMedia().subscriptions.pause.subscribe(
       () => {
           console.log("Video paused");
           // Save video location to db
@@ -145,14 +145,16 @@ export class ViewContentComponent {
 
     this.api.getDefaultMedia().subscriptions.timeUpdate.subscribe(
       (wut) => {
-          console.log("timeUpdate event", this.api.currentTime, wut, this.api.state);
-          if(this.api.currentTime !== (<VideoSource>this.sources[0]).seekTime
-              && this.api.state != "playing") {
-            this.api.currentTime = (<VideoSource>this.sources[0]).seekTime;
-          }
+          //console.log("timeUpdate event", this.api.currentTime, wut, this.api.state);
       }
     );
 
+    this.api.getDefaultMedia().subscriptions.canPlay.subscribe(
+      (wut) => {
+          //console.log("canPlay event", this.api.currentTime, wut, this.api.state);
+          this.api.currentTime = (<VideoSource>this.sources[0]).seekTime;
+      }
+    );
   } // onPlayerReady
 }
 
