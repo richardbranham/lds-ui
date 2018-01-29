@@ -16,7 +16,7 @@ export class UploadComponent {
       }
   
       upload() {
-          this.makeFileRequest("http://ldsapi.kotter.net/api/uploadfile", [], this.filesToUpload).then((result) => {
+          this.makeFileRequest("https://ldsapi.kotter.net/api/uploadfile", [], this.filesToUpload).then((result) => {
               console.log(result);
           }, (error) => {
               console.error(error);

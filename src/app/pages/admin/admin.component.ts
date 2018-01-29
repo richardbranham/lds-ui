@@ -26,7 +26,7 @@ export class AdminComponent {
     try {
       this.token = localStorage.getItem('token');
       console.log("admin, token = ", this.token);
-      const req = this.http.post<ContentModel[]>('http://ldsapi.kotter.net/api/auth/training/getcontent/true', 
+      const req = this.http.post<ContentModel[]>('https://ldsapi.kotter.net/api/auth/training/getcontent/true', 
           {},
           { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
         .subscribe(
@@ -49,7 +49,7 @@ export class AdminComponent {
     try {
       this.token = localStorage.getItem('token');
       console.log("pushToAll, token = ", this.token);
-      const req = this.http.post<ContentModel[]>('http://ldsapi.kotter.net/api/auth/training/push', 
+      const req = this.http.post<ContentModel[]>('https://ldsapi.kotter.net/api/auth/training/push', 
           { 'uuid': contentUuid },
           { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
         .subscribe(
@@ -72,7 +72,7 @@ export class AdminComponent {
     try {
       this.token = localStorage.getItem('token');
       console.log("createUser, token = ", this.token);
-      const req = this.http.post<ContentModel[]>('http://ldsapi.kotter.net/api/auth/user/create', 
+      const req = this.http.post<ContentModel[]>('https://ldsapi.kotter.net/api/auth/user/create', 
           { 'email': email, 'userFullName': userFullName },
           { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
         .subscribe(

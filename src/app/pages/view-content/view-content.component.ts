@@ -47,7 +47,7 @@ export class ViewContentComponent {
 
   selectVideo(videoPath, seekTime, training_progress_uuid) {
     console.log("selectVideo", videoPath, training_progress_uuid);
-    this.currentUrl = "http://ldsapi.kotter.net/storage/" + videoPath;
+    this.currentUrl = "https://ldsapi.kotter.net/storage/" + videoPath;
     this.sources = [{ "src": this.currentUrl, "seekTime":seekTime, "training_progress_uuid":training_progress_uuid }];
 /*    
     //seekTime = this.getProgress(training_progress_uuid);
@@ -67,7 +67,7 @@ export class ViewContentComponent {
       requestData = { 'training_progress_uuid':training_progress_uuid };
     }
 
-    const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/getprogress/true', 
+    const trainingProgressRequest = this.http.post('https://ldsapi.kotter.net/api/auth/training/getprogress/true', 
       requestData, 
       { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
     .subscribe(
@@ -115,7 +115,7 @@ export class ViewContentComponent {
           console.log("Video paused");
           // Save video location to db
           try {
-            const trainingProgressRequest = this.http.post('http://ldsapi.kotter.net/api/auth/training/updateprogress', 
+            const trainingProgressRequest = this.http.post('https://ldsapi.kotter.net/api/auth/training/updateprogress', 
                 { "training_progress_uuid" : (<ProgressModel>this.sources[0]).training_progress_uuid, 
                   "video_last_location" : this.api.currentTime
                 },

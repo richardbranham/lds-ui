@@ -25,7 +25,7 @@ export class UserLocationComponent implements OnInit {
     ngOnInit() {
       try {
         let token = localStorage.getItem('token');
-        const req = this.http.get('http://ldsapi.kotter.net/api/auth/location', 
+        const req = this.http.get('https://ldsapi.kotter.net/api/auth/location', 
           { responseType: 'text', 
             headers: new HttpHeaders().set('Authorization', 'Bearer ' + token).set('Content-Type', 'application/json') })
           .subscribe(
