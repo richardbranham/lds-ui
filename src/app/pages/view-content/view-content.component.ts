@@ -19,7 +19,8 @@ interface VideoSource {
 @Component({
   selector: 'view-content',
   template: `<li *ngFor="let m of contentFileList">
-  <a [routerLink]="" (click)='selectVideo(m.file_name, m.pivot.video_last_location, m.pivot.training_progress_uuid)'>{{m.file_name}}</a><br />
+  <a [routerLink]="" (click)='selectVideo(m.file_name, m.pivot.video_last_location, m.pivot.training_progress_uuid)'>
+    {{m.file_name}} -- {{ ((m.pivot.video_last_location / m.video_length) * 100)  | number:'1.0-0' }}% -- {{m.pivot.updated_at}}</a><br />
   </li>
   <br />
 
