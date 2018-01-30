@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <strong>Administration</strong>
 
 <div>
@@ -11,9 +13,10 @@
     Push content to missionaries
 </div>
 
-<div>
+<div class="div-border">
     Add users to the system:
     <a [routerLink]='' (click)='createUser("Test User", "test@branham.us")'>Add user</a><br />
+
     
     <table class="table table-striped" [mfData]="userList" #mf="mfDataTable" [mfRowsOnPage]="5">
         <thead>
