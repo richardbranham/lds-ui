@@ -44,8 +44,10 @@ export class ViewContentComponent {
   contentFileList: any[] = [];
   token: string = "";
   sources:  Object[] = [];
+  initialSeekDone:  boolean = false;
 
   selectVideo(videoPath, seekTime, training_progress_uuid) {
+    this.initialSeekDone = false;
     console.log("selectVideo", videoPath, training_progress_uuid);
     this.currentUrl = "https://ldsapi.kotter.net/storage/" + videoPath;
     this.sources = [{ "src": this.currentUrl, "seekTime":seekTime, "training_progress_uuid":training_progress_uuid }];
@@ -102,7 +104,27 @@ export class ViewContentComponent {
 
     this.api.getDefaultMedia().subscriptions.seeked.subscribe(
       () => {
-        //console.log("seeked", this.api.currentTime);
+          // Save video location to db
+          try {
+            const trainingProgressRequest = this.http.post('https://ldsapi.kotter.net/api/auth/training/updateprogress', 
+                { "training_progress_uuid" : (<ProgressModel>this.sources[0]).training_progress_uuid, 
+                  "video_last_location" : this.api.currentTime
+                },
+                { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+              .subscribe(
+              res => {
+                //let v = JSON.parse(res);
+                console.log("Saved video location to DB.", res);
+                //this.contentFileList = <any[]>res;
+                this.getProgress((<ProgressModel>this.sources[0]).training_progress_uuid);
+              },
+              err => {
+                console.log('Error occured in getprogress', err);
+              }
+            );
+          } catch(error) {
+
+          }
       });
 
       this.api.getDefaultMedia().subscriptions.seeking.subscribe(
@@ -152,7 +174,10 @@ export class ViewContentComponent {
     this.api.getDefaultMedia().subscriptions.canPlay.subscribe(
       (wut) => {
           //console.log("canPlay event", this.api.currentTime, wut, this.api.state);
-          this.api.currentTime = (<VideoSource>this.sources[0]).seekTime;
+          if(!this.initialSeekDone) {
+            this.api.currentTime = (<VideoSource>this.sources[0]).seekTime;
+            this.initialSeekDone = true;
+          }
       }
     );
   } // onPlayerReady

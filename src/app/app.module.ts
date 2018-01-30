@@ -16,6 +16,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U
 import { AppComponent } from './app.component';
 import { HostListener } from '@angular/core/src/metadata/directives';
+import { DataTableModule } from "angular2-datatable";
 
 const routes: Routes = [
   {
@@ -72,6 +73,7 @@ const routes: Routes = [
     VgControlsModule, 
     VgOverlayPlayModule,
     VgBufferingModule,
+    DataTableModule,
     RouterModule.forRoot(
       routes,
       { enableTracing: true } // <-- debugging purposes only
