@@ -1,16 +1,11 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { UserLocationComponent } from './pages/user-location/user-location.component';
 import { SendMessageComponent } from './pages/send-message/send-message.component';
 import {VgAPI} from 'videogular2/core';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { setTimeout } from 'core-js/library/web/timers';
-
-interface Login {
-  access_token: string;
-  token_type: string;
-  expires_in: string;
-};
+import { LdsApiService } from './lds-api.service';
+import { LdsapiService } from './ldsapi.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +18,7 @@ export class AppComponent {
   preload:string = 'auto';
   api:VgAPI;
 
-  constructor(private http: HttpClient){
+  constructor(private ldsapi: LdsApiService){
     console.log("app constructor");
 
     localStorage.setItem('token', '');
@@ -31,39 +26,17 @@ export class AppComponent {
     console.log("token from localStorage", token);
     if(!token || token === "") {
       console.log("token was not set in localStorage, getting from api");
-      const req = http.post<Login>('https://ldsapi.kotter.net/api/auth/login', 
-          {"email":"rich.ldsapi@branham.us", "password":"Kucharkj1*"},
-          {headers: new HttpHeaders().set('Content-Type', 'application/json')})
-      .subscribe(
-        res => {
-          console.log("login returned", res);
-          console.log("access token:  ", res.access_token);
-          localStorage.setItem('token', res.access_token);
-        },
-        err => {
-          console.log('Login error occured');
-        }
-      );
+      this.ldsapi.getToken();
     }
     
     window.onbeforeunload = function(e) {
-      const req = http.post('https://ldsapi.kotter.net/api/training/getcontent', {"users_id":"1"})
-        .subscribe(
-          res => {
-            //let v = JSON.parse(res);
-            console.log("getcontent res", res);
-            //setTimeout(alert("hello"), 3000);
-          },
-          err => {
-            console.log('Error occured');
-          }
-        );
-
+      ldsapi.getContent();
       return false;
     };
   }
 
   ngOnInit(): void {
+    this.ldsapi.getTestData();
   }
 
   // http://videogular.github.io/videogular2/docs/modules/core/services/vg-api/

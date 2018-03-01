@@ -16,6 +16,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U
 import { AppComponent } from './app.component';
 import { HostListener } from '@angular/core/src/metadata/directives';
+import { LdsApiService } from './lds-api.service';
 import { DataTableModule } from "angular2-datatable";
 
 const routes: Routes = [
@@ -82,7 +83,7 @@ const routes: Routes = [
       apiKey: 'AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U'
     })
   ],
-  providers: [RealtimeGeolocationService],
+  providers: [RealtimeGeolocationService, LdsApiService],
   bootstrap: [AppComponent]
 })
 
