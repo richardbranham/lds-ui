@@ -97,6 +97,11 @@ export const routes: Routes = [
         loadChildren: 'app/+messaging/messaging.module#MessagingModule',
         data: {pageTitle: 'Messaging'}
       },
+      {
+        path: 'training',
+        loadChildren: 'app/+training/training.module#TrainingModule',
+        data: {pageTitle: 'Training'}
+      },
     ]
   },
 
