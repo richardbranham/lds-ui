@@ -1,104 +1,67 @@
+import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes, Router, NavigationStart, Event as NavigationEvent } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpClientModule } from '@angular/common/http';
-import { VgCoreModule } from 'videogular2/core';
-import { VgControlsModule } from 'videogular2/controls';
-import { VgOverlayPlayModule } from 'videogular2/overlay-play';
-import { VgBufferingModule } from 'videogular2/buffering';
-import { RealtimeGeolocationService } from 'nemex-angular2-realtimegeolocation';
-import { UserLocationComponent } from './pages/user-location/user-location.component';
-import { UploadComponent } from './pages/upload/upload.component';
-import { SendMessageComponent } from './pages/send-message/send-message.component';
-import { ViewContentComponent } from './pages/view-content/view-content.component';
-import { AdminComponent } from './pages/admin/admin.component';
-import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U
-import { AppComponent } from './app.component';
-import { HostListener } from '@angular/core/src/metadata/directives';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import { LdsApiService } from './lds-api.service';
-import { DataTableModule } from "angular2-datatable";
 
-const routes: Routes = [
-  {
-    path: 'upload',
-    component: UploadComponent,
-    children: [
-      { path: 'upload',  loadChildren: './pages/upload/upload.module' },
-    ]
-  },
-  {
-    path: 'sendmessage',
-    component: SendMessageComponent,
-    children: [
-      { path: 'sendmessage',  loadChildren: './pages/send-message/send-message.module' },
-    ]
-  },
-  {
-    path: 'training',
-    component: ViewContentComponent,
-    children: [
-      { path: 'training',  loadChildren: './pages/view-content/view-content.module' },
-    ]
-  },
-  {
-    path: 'locations',
-    component: UserLocationComponent,
-    children: [
-      { path: 'locations',  loadChildren: './pages/user-location/user-location.module' },
-    ]
-  },
-  {
-    path: 'admin',
-    component: AdminComponent,
-    children: [
-      { path: 'admin',  loadChildren: './pages/admin/admin.module' },
-    ]
-  }
+/*
+ * Platform and Environment providers/directives/pipes
+ */
+import { routing } from './app.routing'
+// App is our top level component
+import { AppComponent } from './app.component';
+import { APP_RESOLVER_PROVIDERS } from './app.resolver';
+import { AppState, InternalStateType } from './app.service';
+
+// Core providers
+import {CoreModule} from "./core/core.module";
+import {SmartadminLayoutModule} from "./shared/layout/layout.module";
+
+
+import { ModalModule } from 'ngx-bootstrap/modal';
+
+// Application wide providers
+const APP_PROVIDERS = [
+  ...APP_RESOLVER_PROVIDERS,
+  AppState,
+  LdsApiService
 ];
 
+
+type StoreType = {
+  state: InternalStateType,
+  restoreInputValues: () => void,
+  disposeOldHosts: () => void
+};
+
+/**
+ * `AppModule` is the main entry point into Angular2's bootstraping process
+ */
 @NgModule({
+  bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    UserLocationComponent,
-    UploadComponent,
-    SendMessageComponent,
-    ViewContentComponent,
-    AdminComponent
+
   ],
-  imports: [
+  imports: [ // import Angular's modules
     BrowserModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    VgCoreModule,
-    VgControlsModule, 
-    VgOverlayPlayModule,
-    VgBufferingModule,
-    DataTableModule,
-    RouterModule.forRoot(
-      routes,
-      { enableTracing: true } // <-- debugging purposes only
-    ),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U'
-    })
+    BrowserAnimationsModule,
+    FormsModule,
+    ModalModule.forRoot(),
+    CoreModule,
+    SmartadminLayoutModule,
+    routing
   ],
-  providers: [RealtimeGeolocationService, LdsApiService],
-  bootstrap: [AppComponent]
+  exports: [
+  ],
+  providers: [ // expose our Services and Providers into Angular's dependency injection
+    // ENV_PROVIDERS,
+    APP_PROVIDERS
+  ]
 })
-
 export class AppModule {
+  constructor(public appRef: ApplicationRef, public appState: AppState) {}
 
-  constructor(router:Router) {
-    router.events.forEach((event: NavigationEvent) => {
-      if(event instanceof NavigationStart) {
-        console.log("event", event);
-      }
-      // NavigationEnd
-      // NavigationCancel
-      // NavigationError
-      // RoutesRecognized
-    });
-  }
 
 }
+

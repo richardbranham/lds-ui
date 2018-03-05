@@ -2,22 +2,20 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
+    "types": ["node"],
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2016",
       "dom"
     ]
-  },
-  "include": [
-      "src/**/*",
-      "node_modules/nemex-angular2-realtimegeolocation/index.ts"
-  ]
+  }
 }
