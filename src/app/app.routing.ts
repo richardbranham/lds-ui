@@ -87,6 +87,11 @@ export const routes: Routes = [
         loadChildren: 'app/+missionary-locations/missionary-locations.module#MissionaryLocationsModule',
         data: {pageTitle: 'Missionary Locations'}
       },
+      {
+        path: 'useradmin',
+        loadChildren: 'app/+user-admin/user-admin.module#UserAdminModule',
+        data: {pageTitle: 'User Administration'}
+      },
     ]
   },
 
