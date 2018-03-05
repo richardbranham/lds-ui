@@ -92,6 +92,11 @@ export const routes: Routes = [
         loadChildren: 'app/+user-admin/user-admin.module#UserAdminModule',
         data: {pageTitle: 'User Administration'}
       },
+      {
+        path: 'messaging',
+        loadChildren: 'app/+messaging/messaging.module#MessagingModule',
+        data: {pageTitle: 'Messaging'}
+      },
     ]
   },
 
