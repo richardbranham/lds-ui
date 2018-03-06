@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import {Observable} from "rxjs/Observable";
 
 interface Login {
   access_token: string;
@@ -80,16 +81,16 @@ export class LdsApiService {
       } // catch
   } // getUser
 
-  getLocationData(): any {
+  getLocationData(): Observable<any[]> {
     try {
       console.log("ngOnInit in missionary-locations");
       let coords = [];
       let token = this.getToken();
-      const req = this.http.get('https://ldsapi.kotter.net/api/auth/location', 
+      return this.http.get('https://ldsapi.kotter.net/api/auth/location', 
         {
           responseType: 'text', 
           headers: new HttpHeaders().set('Authorization', 'Bearer ' + token).set('Content-Type', 'application/json') })
-        .subscribe(
+        .map(
           res => {
             let v = JSON.parse(res);
             let i = 1;
@@ -99,9 +100,10 @@ export class LdsApiService {
               element.index = i.toString();
               coords.push(element);
               i++;
-              console.log(element.latitude);
+              //console.log(element.latitude);
             });
-            return coords;
+            console.log("returning coords", coords);
+            return <any[]>coords;
           },
           err => {
             console.log('Error occured in user location', err);

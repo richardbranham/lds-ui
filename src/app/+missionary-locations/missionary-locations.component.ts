@@ -24,7 +24,11 @@ export class MissionaryLocationsComponent implements OnInit {
   ngOnInit() {
     try 
     {
-      this.coords = this.ldsapi.getLocationData();
+      this.ldsapi.getLocationData().subscribe(
+        results => this.coords = results,
+        error => console.log("ERRORRRRRR")
+      );
+      console.log("coords", this.coords);
     }
     catch(error)
     {
