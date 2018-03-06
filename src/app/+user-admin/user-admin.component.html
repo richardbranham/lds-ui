@@ -38,7 +38,10 @@
             <!-- widget content -->
             <div class="widget-body no-padding">
               <div>
-                User Administration
+                <ngx-datatable
+                  [rows]="rows"
+                  [columns]="columns">
+                </ngx-datatable>
               </div>
             </div>
             <!-- end widget content -->

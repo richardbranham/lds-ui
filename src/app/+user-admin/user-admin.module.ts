@@ -7,7 +7,7 @@ import { StatsModule } from "../shared/stats/stats.module";
 import { routing } from "./user-admin.routing";
 import { SmartadminDatatableModule } from "../shared/ui/datatable/smartadmin-datatable.module";
 import { CarouselModule } from "ngx-bootstrap";
-import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
@@ -18,9 +18,7 @@ import { AgmCoreModule } from '@agm/core'; // AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprc
     StatsModule,
     SmartadminDatatableModule,
     CarouselModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDVe5bioxyQhH_JoTZCiekFmdXprckYw2U'
-    })
+    NgxDatatableModule
   ],
   declarations: [
     UserAdminComponent
