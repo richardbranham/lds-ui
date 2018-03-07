@@ -54,20 +54,23 @@ export class LdsApiService {
     );
   } // getToken
 
-  getContent():  void {
-    const req = this.http.post('https://ldsapi.kotter.net/api/training/getcontent', {"users_id":"1"})
-    .subscribe(
+  getContent():  Observable<any> {
+    this.token = localStorage.getItem('token');
+    return this.http.post('https://ldsapi.kotter.net/api/auth/training/getcontent/true', 
+      {},
+      { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+    .map(
       res => {
         //let v = JSON.parse(res);
         console.log("getcontent res", res);
         //setTimeout(alert("hello"), 3000);
+        return <any>res;
       },
       err => {
         console.log('Error occured');
       }
     );
   } // getContent
-
 
 createUser(userFullName, email): Observable<any> {
   console.log(email);
@@ -151,4 +154,29 @@ getUser(): Observable<any[]> {
       alert(error);
     }
   } // getLocationData
+
+
+  getProgress(training_progress_uuid) {
+    console.log("getProgress");
+    let contentFileList: any[] = [];
+    let requestData = {};
+    if(training_progress_uuid != null) {
+      requestData = { 'training_progress_uuid':training_progress_uuid };
+    }
+
+    return this.http.post('https://ldsapi.kotter.net/api/auth/training/getprogress/true', 
+        requestData, 
+        { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+      .map(
+        res => {
+          //let v = JSON.parse(res);
+          console.log("getProgress res", res);
+          contentFileList = <any[]>res;
+          return contentFileList;
+        },
+        err => {
+          console.log('Error occured in getprogress', err);
+        }
+      );
+  } // getProgress
 }

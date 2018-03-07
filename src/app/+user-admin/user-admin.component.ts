@@ -32,7 +32,7 @@ export class UserAdminComponent implements OnInit {
       console.log("ngOnInit in user admin");
       this.ldsapi.getUser().subscribe(
         results => this.rows = results,
-        error => console.log("error in user-admin subscribe")
+        error => console.log("error in user-admin subscribe", error)
       );
       console.log("userData", this.userData);
 
