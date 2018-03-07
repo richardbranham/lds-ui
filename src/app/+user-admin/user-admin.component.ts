@@ -14,23 +14,40 @@ export class UserAdminComponent implements OnInit {
 
   constructor(private ldsapi: LdsApiService) { }
 
+  userData:  any[];
+
   rows = [
     { name: 'Austin', gender: 'Male', company: 'Swimlane' },
     { name: 'Dany', gender: 'Male', company: 'KFC' },
     { name: 'Molly', gender: 'Female', company: 'Burger King' },
   ];
+
   columns = [
     { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
+    { prop: 'email' }
   ];
-    
+
   ngOnInit() {
     try {
       console.log("ngOnInit in user admin");
-      let userData = this.ldsapi.getUser();
+      this.ldsapi.getUser().subscribe(
+        results => this.rows = results,
+        error => console.log("error in user-admin subscribe")
+      );
+      console.log("userData", this.userData);
+
+      this.rows = this.userData;
+
     } catch (error) {
-      console.log("Error in ngOnInit in user admin");
+      console.log("Error in ngOnInit in user admin", error);
     }
   } // ngOnInit
+
+  onCreateUser() {
+    console.log("onCreateUser");
+    this.ldsapi.createUser("Richard Branham", "branham.richard@gmail.com").subscribe(
+      results => console.log("user-admin onCreateUser results = ", results),
+      error => console.log("error in user-admin onCreateUser", error)
+    );
+  } // onCreateUser
 }

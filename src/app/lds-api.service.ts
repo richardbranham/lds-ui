@@ -16,6 +16,16 @@ interface UserModel {
   updated_at:  string;
 }
 
+interface ContentModel {
+  training_contents_uuid: string;
+  file_path: string;
+  file_name: string;
+  file_type: string;
+  video_length: string;
+  created_at:  string;
+  updated_at:  string;
+};
+
 @Injectable()
 export class LdsApiService {
 
@@ -59,27 +69,54 @@ export class LdsApiService {
   } // getContent
 
 
-  getUser() {
-    console.log("getUser");
-    try {
-      this.token = localStorage.getItem('token');
-      console.log("getUser, token = ", this.token);
-      const req = this.http.post<UserModel[]>('https://ldsapi.kotter.net/api/auth/user/get', 
-          {},
-          { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
-        .subscribe(
-          res => {
-            console.log("getUser, res", res);
-            this.userList = <UserModel[]>res;
-          },
-          err => {
-            console.log('getUser error occured', err);
-          }
-          );
-      } catch (error) {
-        alert(error);
-      } // catch
-  } // getUser
+createUser(userFullName, email): Observable<any> {
+  console.log(email);
+  try {
+    this.token = localStorage.getItem('token');
+    console.log("createUser, token = ", this.token);
+    return this.http.post<ContentModel[]>('https://ldsapi.kotter.net/api/auth/user/create', 
+        { 'email': email, 'userFullName': userFullName },
+        { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+      .map(
+        res => {
+          console.log("createUser, res", res);
+          //this.contentFileList = res;
+          return <ContentModel[]>res;
+        },
+        err => {
+          console.log('createUser error occured', err);
+        }
+        );
+    } catch (error) {
+      // This error is usually called when device does not support geolocation at all
+      alert(error);
+    } // catch
+} // createUser  
+
+getUser(): Observable<any[]> {
+  try {
+    console.log("getUser from service");
+    let coords = [];
+    let token = this.getToken();
+    return this.http.post<UserModel[]>('https://ldsapi.kotter.net/api/auth/user/get', 
+      {},
+      { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+      .map(
+        res => {
+          console.log("getUser, res", res);
+          this.userList = <UserModel[]>res;
+          console.log("userList", this.userList);
+          return this.userList;
+        },
+        err => {
+          console.log('getUser error occured', err);
+        }
+    );
+  } catch (error) {
+    // This error is usually called when device does not support geolocation at all
+    alert(error);
+  }
+} // getLocationData
 
   getLocationData(): Observable<any[]> {
     try {
