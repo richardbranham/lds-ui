@@ -40,7 +40,10 @@
                 <div>
                     <ul>
                       <li *ngFor="let training of trainingData">
-                        {{ training.file_name }}
+                        <div><img src="./assets/img/download.png" style="width:80px;height:80px;" /></div>
+                        <div>
+                          <a href="https://ldsapi.kotter.net/storage/{{ training.file_name }}">{{ training.file_name }}</a><br />[count] views
+                        </div>
                       </li>
                     </ul>
                 </div>
