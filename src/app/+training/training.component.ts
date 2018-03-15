@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { LdsApiService } from '../lds-api.service';
+import {FormControl} from '@angular/forms';
 
 //@FadeInTop()
 @Component({
@@ -13,7 +14,11 @@ export class TrainingComponent implements OnInit {
 
   trainingData: any[] = [];
 
-  constructor(private ldsapi: LdsApiService) { }
+  stateCtrl: FormControl;
+
+  constructor(private ldsapi: LdsApiService) {
+    this.stateCtrl = new FormControl();
+  }
 
   ngOnInit() {
     try {

@@ -17,7 +17,6 @@ import { AppState, InternalStateType } from './app.service';
 import {CoreModule} from "./core/core.module";
 import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 
-
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 // Application wide providers
@@ -26,7 +25,6 @@ const APP_PROVIDERS = [
   AppState,
   LdsApiService
 ];
-
 
 type StoreType = {
   state: InternalStateType,

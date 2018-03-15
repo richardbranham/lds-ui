@@ -30,22 +30,33 @@
             -->
             <header>
               <span class="widget-icon"> <i class="fa fa-comments"></i> </span>
-  
               <h2>Training Content </h2>
             </header>
             <!-- widget div-->
             <div>
               <!-- widget content -->
               <div class="widget-body no-padding">
-                <div>
-                    <ul>
-                      <li *ngFor="let training of trainingData">
-                        <div><img src="./assets/img/download.png" style="width:80px;height:80px;" /></div>
-                        <div>
-                          <a href="https://ldsapi.kotter.net/storage/{{ training.file_name }}">{{ training.file_name }}</a><br />[count] views
-                        </div>
-                      </li>
-                    </ul>
+                <div class="grid-container">
+                    <div class="grid-item" class="left">
+                      <div *ngFor="let training of trainingData">
+                        <img src="./assets/img/download.png" style="width:40px;height:40px;" />
+                        <a href="https://ldsapi.kotter.net/storage/{{ training.file_name }}">{{ training.file_name }}</a><br />
+                      </div>
+                    </div>
+                    <div class="grid-item">Push to specific missionaries<br />
+                      <form class="example-form">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                              <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+                              <span>{{ state.name }}</span> |
+                              <small>Population: {{state.population}}</small>
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </form>
+                    </div>
                 </div>
               </div>
               <!-- end widget content -->
