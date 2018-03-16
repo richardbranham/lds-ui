@@ -44,18 +44,16 @@
                       </div>
                     </div>
                     <div class="grid-item">Push to specific missionaries<br />
-                      <form class="example-form">
-                        <mat-form-field class="example-full-width">
-                          <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
-                          <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-                              <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
-                              <span>{{ state.name }}</span> |
-                              <small>Population: {{state.population}}</small>
-                            </mat-option>
-                          </mat-autocomplete>
-                        </mat-form-field>
-                      </form>
+
+                      <mat-form-field>
+                        <mat-select placeholder="Favorite food" [(value)]="selected">
+                          <mat-option *ngFor="let food of foods" [(value)]="food.email">
+                            {{ food.name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <p>You selected: {{ selected }}</p>
+                      
                     </div>
                 </div>
               </div>

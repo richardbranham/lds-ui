@@ -7,10 +7,40 @@ import { StatsModule } from "../shared/stats/stats.module";
 import { routing } from "./training.routing";
 import { SmartadminDatatableModule } from "../shared/ui/datatable/smartadmin-datatable.module";
 import { CarouselModule } from "ngx-bootstrap";
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -21,11 +51,38 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     StatsModule,
     SmartadminDatatableModule,
     CarouselModule,
-    MatGridListModule,
     MatAutocompleteModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
   ],
   declarations: [
     TrainingComponent
