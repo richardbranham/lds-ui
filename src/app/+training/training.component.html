@@ -44,11 +44,13 @@
                       </div>
                     </div>
                     <div class="grid-item">Push to specific missionaries<br />
-
+                      <mat-checkbox (change)="checked()">Elders</mat-checkbox>
+                      <mat-checkbox (change)="checked()">Sisters</mat-checkbox>
+                      <mat-checkbox (change)="checked()">Seniors</mat-checkbox>
                       <mat-form-field>
-                        <mat-select placeholder="Favorite food" [(value)]="selected">
-                          <mat-option *ngFor="let food of foods" [(value)]="food.email">
-                            {{ food.name }}
+                        <mat-select placeholder="User" [(value)]="selected">
+                          <mat-option *ngFor="let user of users" [(value)]="user.email">
+                            {{ user.name }}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>

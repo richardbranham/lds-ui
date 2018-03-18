@@ -15,14 +15,6 @@ export class TrainingComponent implements OnInit {
 
   users: any[] = [];
 
-  foods1 = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-
-  foods: any[] = [];
-  
   constructor(private ldsapi: LdsApiService) {
   }
 
@@ -40,11 +32,15 @@ export class TrainingComponent implements OnInit {
       // );
 
       this.ldsapi.getUser().subscribe(
-        results => { this.foods = results; console.log("getUser", results); },
+        results => { this.users = results; console.log("getUser", results); },
         error => console.log("error in getUser subscribe", error)
       );
     } catch (error) {
       alert(error);
     }
   } // ngOnInit
+
+  checked() {
+    alert("checked");
+  } // checked
 }
