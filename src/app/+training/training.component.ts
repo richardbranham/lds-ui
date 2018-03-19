@@ -40,7 +40,11 @@ export class TrainingComponent implements OnInit {
     }
   } // ngOnInit
 
-  checked() {
-    alert("checked");
+  checked(whom) {
+    alert("checked" + whom);
   } // checked
+
+  assignTraining() {
+    alert("assignTraining");
+  } // assignTraining
 }
