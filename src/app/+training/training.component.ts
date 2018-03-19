@@ -45,6 +45,10 @@ export class TrainingComponent implements OnInit {
   } // checked
 
   assignTraining() {
-    alert("assignTraining");
+    //alert("assignTraining");
+    this.trainingData.forEach(element => {
+      console.log("element.training_contents_uuid", element.training_contents_uuid);
+      this.ldsapi.pushToAll(element.training_contents_uuid);
+    });
   } // assignTraining
 }

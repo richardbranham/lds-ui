@@ -161,11 +161,14 @@ getUser(): Observable<any[]> {
     console.log("getProgress");
     let contentFileList: any[] = [];
     let requestData = {};
-    if(training_progress_uuid != null) {
+
+    let getAll = '';
+    if(training_progress_uuid != null && training_progress_uuid != '') {
       requestData = { 'training_progress_uuid':training_progress_uuid };
+      getAll = '/true';
     }
 
-    return this.http.post('https://ldsapi.kotter.net/api/auth/training/getprogress/true', 
+    return this.http.post('https://ldsapi.kotter.net/api/auth/training/getprogress' + getAll, 
         requestData, 
         { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
       .map(
@@ -185,7 +188,7 @@ getUser(): Observable<any[]> {
     console.log(contentUuid);
     try {
       this.token = localStorage.getItem('token');
-      console.log("pushToAll, token = ", this.token);
+      console.log("pushToAll");
       const req = this.http.post<ContentModel[]>('https://ldsapi.kotter.net/api/auth/training/push', 
           { 'uuid': contentUuid },
           { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
@@ -203,4 +206,31 @@ getUser(): Observable<any[]> {
         alert(error);
       } // catch
   } // pushToAll
+
+  getAssignments(users_id) {
+    console.log("getProgress");
+    let contentFileList: any[] = [];
+    let requestData = {};
+
+    let getAll = '';
+    if(users_id != null && users_id != '') {
+      requestData = { 'training_progress_uuid':users_id };
+      getAll = '/true';
+    }
+
+    return this.http.post('https://ldsapi.kotter.net/api/auth/training/getassignments' + getAll, 
+        requestData, 
+        { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
+      .map(
+        res => {
+          //let v = JSON.parse(res);
+          console.log("getProgress res", res);
+          contentFileList = <any[]>res;
+          return contentFileList;
+        },
+        err => {
+          console.log('Error occured in getprogress', err);
+        }
+      );
+  } // getAssignments
 }
