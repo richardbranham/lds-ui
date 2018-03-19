@@ -16,13 +16,16 @@ export class UserAdminComponent implements OnInit {
 
   userData:  any[];
 
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
+  rows = [];
 
   columns = [
+    { prop: 'name' },
+    { prop: 'email' }
+  ];
+
+  trainingRows = [];
+
+  trainingCols = [
     { prop: 'name' },
     { prop: 'email' }
   ];
@@ -40,6 +43,16 @@ export class UserAdminComponent implements OnInit {
 
     } catch (error) {
       console.log("Error in ngOnInit in user admin", error);
+    }
+
+    try {
+      console.log("getProgress in user admin");
+      this.ldsapi.getProgress('').subscribe(
+        results => this.trainingRows = results,
+        error => console.log("error in user-admin getProgress", error)
+      );
+    } catch (error) {
+      console.log("Error in ngOnInit 2 in user admin", error);
     }
   } // ngOnInit
 
