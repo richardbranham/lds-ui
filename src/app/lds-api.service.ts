@@ -192,7 +192,7 @@ getUser(): Observable<any[]> {
       const req = this.http.post<ContentModel[]>('https://ldsapi.kotter.net/api/auth/training/push', 
           { 'uuid': contentUuid },
           { headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.token).set('Content-Type', 'application/json') })
-        .map(
+        .subscribe(
           res => {
             console.log("pushToAll, res", res);
             //this.contentFileList = res;
