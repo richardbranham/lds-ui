@@ -60,6 +60,13 @@
                       <a [routerLink]="" (click)="assignTraining()">Assign training to selected users</a>
                       
                     </div>
+                    <div>
+                    <!-- content views -->
+                    <ngx-datatable
+                      [rows]="trainingRows"
+                      [columns]="trainingCols">
+                    </ngx-datatable>
+                  </div>
                 </div>
               </div>
               <!-- end widget content -->

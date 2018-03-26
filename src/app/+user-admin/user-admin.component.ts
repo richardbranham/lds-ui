@@ -23,13 +23,6 @@ export class UserAdminComponent implements OnInit {
     { prop: 'email' }
   ];
 
-  trainingRows = [];
-
-  trainingCols = [
-    { prop: 'file_name' },
-    { prop: 'updated_at' }
-  ];
-
   ngOnInit() {
     try {
       console.log("ngOnInit in user admin");
@@ -43,16 +36,6 @@ export class UserAdminComponent implements OnInit {
 
     } catch (error) {
       console.log("Error in ngOnInit in user admin", error);
-    }
-
-    try {
-      console.log("getAssignments in user admin");
-      this.ldsapi.getAssignments(1).subscribe(
-        results => { this.trainingRows = results; console.log("trainingRows", this.trainingRows); },
-        error => console.log("error in user-admin getAssignments", error)
-      );
-    } catch (error) {
-      console.log("Error in ngOnInit 2 in user admin", error);
     }
   } // ngOnInit
 

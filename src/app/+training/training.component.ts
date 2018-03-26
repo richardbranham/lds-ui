@@ -15,6 +15,14 @@ export class TrainingComponent implements OnInit {
 
   users: any[] = [];
 
+  trainingRows = [];
+
+  trainingCols = [
+    { prop: 'file_name' },
+    { prop: 'name' },
+    { prop: 'updated_at' }
+  ];
+
   constructor(private ldsapi: LdsApiService) {
   }
 
@@ -37,6 +45,16 @@ export class TrainingComponent implements OnInit {
       );
     } catch (error) {
       alert(error);
+    }
+
+    try {
+      console.log("getAssignments in training");
+      this.ldsapi.getAssignments(1).subscribe(
+        results => { this.trainingRows = results; console.log("trainingRows", this.trainingRows); },
+        error => console.log("error in training getAssignments", error)
+      );
+    } catch (error) {
+      console.log("Error in ngOnInit 2 in training", error);
     }
   } // ngOnInit
 
