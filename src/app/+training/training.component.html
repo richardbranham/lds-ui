@@ -58,14 +58,11 @@
                       </mat-form-field>
                       <p>You selected: {{ selected }}</p>
                       <a [routerLink]="" (click)="assignTraining()">Assign training to selected users</a>
-                      
-                    </div>
-                    <div>
-                    <!-- content views -->
-                    <ngx-datatable
-                      [rows]="trainingRows"
-                      [columns]="trainingCols">
-                    </ngx-datatable>
+                      <!-- content views -->
+                      <ngx-datatable [scrollbarV]="true" style="height: 200px"
+                        [rows]="trainingRows"
+                        [columns]="trainingCols">
+                      </ngx-datatable>
                   </div>
                 </div>
               </div>
