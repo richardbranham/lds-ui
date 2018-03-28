@@ -5,7 +5,12 @@ import { LdsApiService } from './lds-api.service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { RouterModule } from '@angular/router';
+
+import { TourMatMenuModule } from 'ngx-tour-md-menu';
+
 /*
+
  * Platform and Environment providers/directives/pipes
  */
 import { routing } from './app.routing'
@@ -51,6 +56,7 @@ type StoreType = {
     SmartadminLayoutModule,
     routing,
     ReactiveFormsModule,
+    TourMatMenuModule.forRoot()
   ],
   exports: [
   ],

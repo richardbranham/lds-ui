@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { LdsApiService } from '../lds-api.service';
+//import { TourService } from 'ngx-tour-console';
 
 //@FadeInTop()
 @Component({
@@ -56,6 +57,16 @@ export class TrainingComponent implements OnInit {
     } catch (error) {
       console.log("Error in ngOnInit 2 in training", error);
     }
+
+    this.tourService.initialize([{
+      anchorId: 'some.anchor.id',
+      content: 'Some content',
+      title: 'First',
+    }, {
+      anchorId: 'another.anchor.id',
+      content: 'Other content',
+      title: 'Second',
+    }]);    
   } // ngOnInit
 
   checked(whom) {

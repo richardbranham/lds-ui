@@ -8,6 +8,7 @@ import { routing } from "./training.routing";
 import { SmartadminDatatableModule } from "../shared/ui/datatable/smartadmin-datatable.module";
 import { CarouselModule } from "ngx-bootstrap";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 import {
   MatAutocompleteModule,
   MatButtonModule,

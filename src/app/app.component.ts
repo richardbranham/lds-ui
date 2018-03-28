@@ -3,7 +3,7 @@ import { LdsApiService } from './lds-api.service';
 
 @Component({
   selector: 'app-root',
-  template: '<router-outlet></router-outlet>'
+  template: '<router-outlet></router-outlet><tour-step-template></tour-step-template>'
 })
 export class AppComponent {
   public title = 'app works!';
