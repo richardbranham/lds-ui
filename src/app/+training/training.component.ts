@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 //import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { LdsApiService } from '../lds-api.service';
 //import { TourService } from 'ngx-tour-console';
+import { FileUploader } from 'ng2-file-upload';
+
+const URL = 'https://ldsapi.kotter.net/api/auth/uploadfile';
 
 //@FadeInTop()
 @Component({
@@ -11,7 +14,9 @@ import { LdsApiService } from '../lds-api.service';
 })
 
 export class TrainingComponent implements OnInit {
-
+  
+  public uploader:FileUploader = new FileUploader({url: URL});
+    
   trainingData: any[] = [];
 
   users: any[] = [];
@@ -86,4 +91,8 @@ export class TrainingComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     //this.table.offset = 0;
   }
+
+  onUploadTraining() {
+    console.log("onUploadTraining");
+  } // onUploadTraining
 }

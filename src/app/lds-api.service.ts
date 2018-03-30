@@ -202,7 +202,6 @@ getUser(): Observable<any[]> {
           }
           );
       } catch (error) {
-        // This error is usually called when device does not support geolocation at all
         alert(error);
       } // catch
   } // pushToAll
@@ -233,4 +232,8 @@ getUser(): Observable<any[]> {
         }
       );
   } // getAssignments
+
+  uploadFile() {
+    console.log("uploadFile");
+  } // uploadFile
 }

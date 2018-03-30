@@ -38,7 +38,8 @@
               <div class="widget-body no-padding">
                 <div class="grid-container">
                     <div class="grid-item" class="left">
-                      <div *ngFor="let training of trainingData">
+                        <button (click)="onUploadTraining()">Upload training content</button>
+                        <div *ngFor="let training of trainingData">
                         <mat-checkbox (change)="checked(training.file_name)"></mat-checkbox>
                         <img src="./assets/img/download.png" style="width:40px;height:40px;" />
                         <a href="https://ldsapi.kotter.net/storage/{{ training.file_name }}">{{ training.file_name }}</a><br />
